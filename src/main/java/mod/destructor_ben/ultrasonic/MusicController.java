@@ -113,6 +113,7 @@ public class MusicController
         MinecraftClient.getInstance().getMusicTracker().stop();
     }
 
+    // TODO: spamming this can leave multiple songs playing
     // Stop the current song and set the delay to 0
     public static void skip()
     {

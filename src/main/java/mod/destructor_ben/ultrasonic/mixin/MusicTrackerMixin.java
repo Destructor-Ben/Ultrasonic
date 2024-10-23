@@ -9,16 +9,17 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MusicTracker.class)
-public class MusicTrackerMixin {
-	@Inject(at = @At("RETURN"), method = "play")
-	private void onPlay(MusicSound music, CallbackInfo info)
-	{
-		MusicController.displayCurrentMusicMessage();
-	}
+public class MusicTrackerMixin
+{
+    @Inject(at = @At("RETURN"), method = "play")
+    private void onPlay(MusicSound music, CallbackInfo info)
+    {
+        MusicController.displayCurrentMusicMessage();
+    }
 
-	@Inject(at = @At("HEAD"), method = "tick")
-	private void onTick(CallbackInfo info)
-	{
-		MusicController.tick();
-	}
+    @Inject(at = @At("HEAD"), method = "tick")
+    private void onTick(CallbackInfo info)
+    {
+        MusicController.tick();
+    }
 }

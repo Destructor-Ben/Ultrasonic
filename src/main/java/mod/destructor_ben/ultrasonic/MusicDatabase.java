@@ -1,11 +1,7 @@
 package mod.destructor_ben.ultrasonic;
 
-import mod.destructor_ben.ultrasonic.mixin.MusicTrackerAccessor;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.ResourceFinder;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -60,7 +56,8 @@ public class MusicDatabase
 
     public Album getAlbum(Identifier id)
     {
-        for (var album : albums) {
+        for (var album : albums)
+        {
             if (album.id.equals(id))
                 return album;
         }
@@ -70,8 +67,10 @@ public class MusicDatabase
 
     public Track getTrack(Identifier id)
     {
-        for (var album : albums) {
-            for (var track : album.tracks) {
+        for (var album : albums)
+        {
+            for (var track : album.tracks)
+            {
                 if (track.id.equals(id))
                     return track;
             }

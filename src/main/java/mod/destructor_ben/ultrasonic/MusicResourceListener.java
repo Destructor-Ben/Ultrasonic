@@ -9,16 +9,17 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 // Have to use this because we can reload resources at any time
-public class MusicResourceListener implements IdentifiableResourceReloadListener {
+public class MusicResourceListener implements IdentifiableResourceReloadListener
+{
     @Override
-    public Identifier getFabricId() {
+    public Identifier getFabricId()
+    {
         return Identifier.of(Ultrasonic.MOD_ID, "music");
     }
 
     @Override
-    public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor) {
-        return CompletableFuture.runAsync(() -> {
-            MusicDatabase.initialize(manager);
-        }, prepareExecutor).thenCompose(synchronizer::whenPrepared);
+    public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor)
+    {
+        return CompletableFuture.runAsync(() -> MusicDatabase.initialize(manager), prepareExecutor).thenCompose(synchronizer::whenPrepared);
     }
 }

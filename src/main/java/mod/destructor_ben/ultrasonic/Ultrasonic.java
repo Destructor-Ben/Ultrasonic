@@ -7,18 +7,21 @@ import net.minecraft.resource.ResourceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Ultrasonic implements ClientModInitializer {
-	public static final String MOD_ID = "ultrasonic";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+public class Ultrasonic implements ClientModInitializer
+{
+    public static final String MOD_ID = "ultrasonic";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	@Override
-	public void onInitializeClient() {
-		ClientLifecycleEvents.CLIENT_STARTED.register(client -> {
-			UltrasonicConfig.initialize();
-		});
+    @Override
+    public void onInitializeClient()
+    {
+        ClientLifecycleEvents.CLIENT_STARTED.register(client ->
+        {
+            UltrasonicConfig.initialize();
+        });
 
-		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new MusicResourceListener());
+        ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new MusicResourceListener());
 
-		MusicKeybinds.initialize();
-	}
+        MusicKeybinds.initialize();
+    }
 }

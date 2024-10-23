@@ -9,7 +9,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import java.util.List;
 
 @Mixin(WeightedSoundSet.class)
-public interface WeightedSoundSetAccessor {
+public interface WeightedSoundSetAccessor
+{
     @Accessor("sounds")
     List<SoundContainer<Sound>> getSounds();
 }

@@ -15,7 +15,8 @@ import net.minecraft.util.math.random.Random;
 // TODO: allow certain albums and tracks to be disabled - probably do this by making a MusicSoundInstance (based on positioned sound instance) that is fancy, or modify WeightedSoundSet
 // TODO: add keybinds to control the music
 // TODO: stop music when records are playing
-public class MusicController {
+public class MusicController
+{
     public static void displayCurrentMusicMessage()
     {
         // Config option
@@ -51,7 +52,8 @@ public class MusicController {
         MinecraftClient.getInstance().inGameHud.setRecordPlayingOverlay(message);
     }
 
-    public static void tick() {
+    public static void tick()
+    {
         var client = MinecraftClient.getInstance();
         var accessor = (MusicTrackerAccessor)(client.getMusicTracker());
 
@@ -60,14 +62,16 @@ public class MusicController {
             accessor.setTimeUntilNextSong(0);
     }
 
-    public static boolean shouldPlaySound(Identifier id) {
+    public static boolean shouldPlaySound(Identifier id)
+    {
         // TODO: make this check if a sound should be disabled
         var path = id.getPath();
         return !path.equals("music/menu/beginning_2") && !path.equals("music/game/yakusoku");
     }
 
     // TODO: test
-    public static Sound getSoundFromSoundSet(WeightedSoundSet set, Random random) {
+    public static Sound getSoundFromSoundSet(WeightedSoundSet set, Random random)
+    {
         // Vanilla behaviour
         if (!UltrasonicConfig.modifyAvailableMusic)
             return set.getSound(random);
@@ -82,7 +86,8 @@ public class MusicController {
 
         int weight = random.nextInt(totalWeight);
 
-        for (var soundContainer : sounds) {
+        for (var soundContainer : sounds)
+        {
             weight -= soundContainer.getWeight();
 
             if (weight >= 0)

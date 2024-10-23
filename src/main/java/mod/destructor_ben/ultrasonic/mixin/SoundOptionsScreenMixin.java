@@ -8,9 +8,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SoundOptionsScreen.class)
-public class SoundOptionsScreenMixin {
+public class SoundOptionsScreenMixin
+{
     @Inject(at = @At("RETURN"), method = "addOptions")
-    private void onAddOptions(CallbackInfo info) {
+    private void onAddOptions(CallbackInfo info)
+    {
         UltrasonicConfig.modifyMusicScreen();
     }
 }

@@ -18,7 +18,8 @@ import java.io.IOException;
 
 // TODO: finish populating the config screen, the default values, the fields, and the saving and loading logic
 // TODO: maybe abstract this a little bit
-public class UltrasonicConfig {
+public class UltrasonicConfig
+{
     private static final int CONFIG_VERSION = 1;
     private static File file;
 
@@ -62,10 +63,11 @@ public class UltrasonicConfig {
         body.addWidgetEntry(musicOptionsButton, null);
     }
 
-    public static Screen getConfigScreen(Screen parent) {
+    public static Screen getConfigScreen(Screen parent)
+    {
         var builder = ConfigBuilder.create()
-            .setParentScreen(parent)
-            .setTitle(Text.translatable("option.ultrasonic.title"));
+                                   .setParentScreen(parent)
+                                   .setTitle(Text.translatable("option.ultrasonic.title"));
 
         var entryBuilder = builder.entryBuilder();
 
@@ -73,19 +75,20 @@ public class UltrasonicConfig {
         var music = builder.getOrCreateCategory(Text.translatable("option.ultrasonic.category.music"));
 
         music.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.ultrasonic.display_music_message"), displayMusicMessage)
-            .setDefaultValue(DEFAULT_DISPLAY_MUSIC_MESSAGE)
-            .setTooltip(Text.translatable("option.ultrasonic.display_music_message.tooltip"))
-            .setSaveConsumer(newValue -> displayMusicMessage = newValue)
-            .build());
+                                   .setDefaultValue(DEFAULT_DISPLAY_MUSIC_MESSAGE)
+                                   .setTooltip(Text.translatable("option.ultrasonic.display_music_message.tooltip"))
+                                   .setSaveConsumer(newValue -> displayMusicMessage = newValue)
+                                   .build());
 
         music.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.ultrasonic.always_play_music"), alwaysPlayMusic)
-            .setDefaultValue(DEFAULT_ALWAYS_PLAY_MUSIC)
-            .setTooltip(Text.translatable("option.ultrasonic.always_play_music.tooltip"))
-            .setSaveConsumer(newValue -> alwaysPlayMusic = newValue)
-            .build());
+                                   .setDefaultValue(DEFAULT_ALWAYS_PLAY_MUSIC)
+                                   .setTooltip(Text.translatable("option.ultrasonic.always_play_music.tooltip"))
+                                   .setSaveConsumer(newValue -> alwaysPlayMusic = newValue)
+                                   .build());
 
         // Saving logic
-        builder.setSavingRunnable(() -> {
+        builder.setSavingRunnable(() ->
+        {
             save();
             load();
         });
@@ -95,20 +98,24 @@ public class UltrasonicConfig {
 
     public static void load()
     {
-        try {
+        try
+        {
             loadInternal();
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             Ultrasonic.LOGGER.error("Config failed to load - {}", e.getMessage(), e);
         }
     }
 
     public static void save()
     {
-        try {
+        try
+        {
             saveInternal();
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             Ultrasonic.LOGGER.error("Config failed to save - {}", e.getMessage(), e);
         }
     }

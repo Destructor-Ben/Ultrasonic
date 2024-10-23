@@ -6,7 +6,8 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
-public class MusicKeybinds {
+public class MusicKeybinds
+{
     public static KeyBinding stopKeybind;
     public static KeyBinding skipKeybind;
 
@@ -26,7 +27,8 @@ public class MusicKeybinds {
             "category.ultrasonic.music"
         ));
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+        ClientTickEvents.END_CLIENT_TICK.register(client ->
+        {
             while (stopKeybind.wasPressed())
             {
                 MusicController.stop();

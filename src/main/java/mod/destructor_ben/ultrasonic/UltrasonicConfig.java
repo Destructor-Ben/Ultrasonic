@@ -40,7 +40,7 @@ public class UltrasonicConfig
 
     // TODO: integrate these properly
     public static boolean modifyAvailableMusic = true;
-    public static List<Track> ignoredTracks = new ArrayList<>();
+    public static List<Identifier> ignoredTracks = new ArrayList<>();
 
     public static void initialize()
     {
@@ -49,9 +49,9 @@ public class UltrasonicConfig
         save();
 
         // TODO: temporary, just for testing
-        ignoredTracks.add(MusicDatabase.getInstance().getTrack(Identifier.ofVanilla("menu/beginning_2")));
-        ignoredTracks.add(MusicDatabase.getInstance().getTrack(Identifier.ofVanilla("creative/aria_math")));
-        ignoredTracks.add(MusicDatabase.getInstance().getTrack(Identifier.ofVanilla("creative/dreiton")));
+        ignoredTracks.add(Identifier.ofVanilla("menu/beginning_2"));
+        ignoredTracks.add(Identifier.ofVanilla("creative/aria_math"));
+        ignoredTracks.add(Identifier.ofVanilla("creative/dreiton"));
     }
 
     public static void modifyMusicScreen()

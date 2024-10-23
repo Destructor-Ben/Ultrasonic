@@ -59,7 +59,12 @@ public class MusicController
     {
         id = MusicDatabase.soundIDtoID(id);
         var track = MusicDatabase.getInstance().getTrack(id);
-        MinecraftClient.getInstance().player.sendMessage(Text.literal(id.toString())); // TODO: TEMPORARY
+
+        // TODO: temporary
+        var player = MinecraftClient.getInstance().player;
+        if (player != null)
+            player.sendMessage(Text.literal(id.toString()));
+
         return !UltrasonicConfig.ignoredTracks.contains(track);
     }
 

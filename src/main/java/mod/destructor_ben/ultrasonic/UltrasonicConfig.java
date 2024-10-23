@@ -50,8 +50,8 @@ public class UltrasonicConfig
 
         // TODO: temporary, just for testing
         ignoredTracks.add(Identifier.ofVanilla("menu/beginning_2"));
-        ignoredTracks.add(Identifier.ofVanilla("creative/aria_math"));
-        ignoredTracks.add(Identifier.ofVanilla("creative/dreiton"));
+        ignoredTracks.add(Identifier.ofVanilla("game/creative/aria_math"));
+        ignoredTracks.add(Identifier.ofVanilla("game/creative/dreiton"));
     }
 
     public static void modifyMusicScreen()

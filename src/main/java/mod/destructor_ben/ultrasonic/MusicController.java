@@ -58,14 +58,14 @@ public class MusicController
     public static boolean shouldPlaySound(Identifier id)
     {
         id = MusicDatabase.soundIDtoID(id);
-        var track = MusicDatabase.getInstance().getTrack(id);
 
         // TODO: temporary
         var player = MinecraftClient.getInstance().player;
         if (player != null)
             player.sendMessage(Text.literal(id.toString()));
 
-        return !UltrasonicConfig.ignoredTracks.contains(track);
+        // TODO: handle albums too
+        return !UltrasonicConfig.ignoredTracks.contains(id);
     }
 
     // TODO: test

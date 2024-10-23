@@ -13,6 +13,7 @@ public class MusicKeybinds
 
     public static void initialize()
     {
+        // Note that this is indistinguishable from skip when music always plays
         stopKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.ultrasonic.stop",
             InputUtil.Type.KEYSYM,

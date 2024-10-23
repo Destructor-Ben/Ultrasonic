@@ -34,15 +34,7 @@ public class MusicController
             return;
 
         // Yay, get the id of the INSTANCE of the sound, not the sound group
-        var id = currentMusic.getSound().getIdentifier();
-        var path = id.getPath();
-
-        // Slice the "music/" off the beginning
-        var sliceString = "music/";
-        if (path.startsWith(sliceString))
-            path = path.substring(sliceString.length());
-
-        id = id.withPath(path);
+        var id = MusicDatabase.soundIDtoID(currentMusic.getSound().getIdentifier());
 
         // Get the track
         var track = MusicDatabase.getInstance().getTrack(id);

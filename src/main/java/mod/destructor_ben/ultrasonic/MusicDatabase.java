@@ -39,13 +39,27 @@ public class MusicDatabase
         return instance;
     }
 
+    // Takes the resource path in ("sounds/music" prefix)
     public static Identifier musicPathToID(Identifier path)
     {
         var id = path.getPath();
         // Chop off start and end
-        // Add 1 for the trailing slash that is illegal for some reason
+        // Add 1 for the leading slash that is illegal for some reason
         id = id.substring(FOLDER.length() + 1, id.length() - EXTENSION.length());
         return Identifier.of(path.getNamespace(), id);
+    }
+
+    // Takes the SoundEvent path in ("music" prefix)
+    public static Identifier soundIDtoID(Identifier id)
+    {
+        var path = id.getPath();
+
+        // Slice the "music/" off the beginning
+        var sliceString = "music/";
+        if (path.startsWith(sliceString))
+            path = path.substring(sliceString.length());
+
+        return id.withPath(path);
     }
 
     public void addAlbum(Album album)
@@ -82,7 +96,6 @@ public class MusicDatabase
     // Note that not all songs in the actual albums are here, since not all are used
     // TODO: add ender dragon music
     // TODO: add the 3 C418 singles
-    // TODO: add all of the songs from the albums - will have to include the ones not used, also could add music discs (though this defeats the purposes of the discs)
     private void addInitialData()
     {
         // Minecraft - Volume Alpha

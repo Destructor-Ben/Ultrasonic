@@ -21,6 +21,7 @@ import java.util.List;
 
 // TODO: finish populating the config screen, the default values, the fields, and the saving and loading logic
 // TODO: maybe abstract this a little bit
+// TODO: add keybinds changing here
 public class UltrasonicConfig
 {
     private static final int CONFIG_VERSION = 1;

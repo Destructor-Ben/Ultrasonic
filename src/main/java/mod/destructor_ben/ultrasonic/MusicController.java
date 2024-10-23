@@ -15,6 +15,7 @@ import net.minecraft.util.math.random.Random;
 // TODO: allow certain albums and tracks to be disabled - probably do this by making a MusicSoundInstance (based on positioned sound instance) that is fancy, or modify WeightedSoundSet
 // TODO: add keybinds to control the music
 // TODO: stop music when records are playing
+// TODO: maybe allow playing a song whenever the user wants + queuing songs
 public class MusicController
 {
     public static void displayCurrentMusicMessage()

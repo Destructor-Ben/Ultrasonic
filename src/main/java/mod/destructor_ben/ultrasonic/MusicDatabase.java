@@ -39,7 +39,7 @@ public class MusicDatabase
         return instance;
     }
 
-    // Takes the resource path in ("sounds/music" prefix)
+    // Takes the resource path in ("sounds/music/" prefix)
     public static Identifier musicPathToID(Identifier path)
     {
         var id = path.getPath();
@@ -49,7 +49,7 @@ public class MusicDatabase
         return Identifier.of(path.getNamespace(), id);
     }
 
-    // Takes the SoundEvent path in ("music" prefix)
+    // Takes the SoundEvent path in ("music/" prefix)
     public static Identifier soundIDtoID(Identifier id)
     {
         var path = id.getPath();

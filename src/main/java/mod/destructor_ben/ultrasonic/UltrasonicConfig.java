@@ -10,11 +10,14 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO: finish populating the config screen, the default values, the fields, and the saving and loading logic
 // TODO: maybe abstract this a little bit
@@ -37,12 +40,18 @@ public class UltrasonicConfig
 
     // TODO: integrate these properly
     public static boolean modifyAvailableMusic = true;
+    public static List<Track> ignoredTracks = new ArrayList<>();
 
     public static void initialize()
     {
         file = FabricLoader.getInstance().getConfigDir().resolve(Ultrasonic.MOD_ID + ".json").toFile();
         load();
         save();
+
+        // TODO: temporary, just for testing
+        ignoredTracks.add(MusicDatabase.getInstance().getTrack(Identifier.ofVanilla("menu/beginning_2")));
+        ignoredTracks.add(MusicDatabase.getInstance().getTrack(Identifier.ofVanilla("creative/aria_math")));
+        ignoredTracks.add(MusicDatabase.getInstance().getTrack(Identifier.ofVanilla("creative/dreiton")));
     }
 
     public static void modifyMusicScreen()

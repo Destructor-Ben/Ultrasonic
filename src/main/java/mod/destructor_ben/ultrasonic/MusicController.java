@@ -54,11 +54,13 @@ public class MusicController
             accessor.setTimeUntilNextSong(0);
     }
 
+    // TODO: test
     public static boolean shouldPlaySound(Identifier id)
     {
-        // TODO: make this check if a sound should be disabled
-        var path = id.getPath();
-        return !path.equals("music/menu/beginning_2") && !path.equals("music/game/yakusoku");
+        id = MusicDatabase.soundIDtoID(id);
+        var track = MusicDatabase.getInstance().getTrack(id);
+        MinecraftClient.getInstance().player.sendMessage(Text.literal(id.toString())); // TODO: TEMPORARY
+        return !UltrasonicConfig.ignoredTracks.contains(track);
     }
 
     // TODO: test

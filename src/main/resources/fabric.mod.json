@@ -1,0 +1,42 @@
+{
+	"schemaVersion": 1,
+	"id": "ultrasonic",
+	"version": "${version}",
+	"name": "Ultrasonic",
+	"description": "A music mod for Minecraft.",
+	"authors": [
+		"Destructor_Ben"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net",
+		"sources": "https://github.com/Destructor-Ben/Ultrasonic",
+		"issues": "https://github.com/Destructor-Ben/Ultrasonic/issues"
+	},
+	"custom": {
+		"modmenu": {
+			"update_checker": true,
+			"links": {
+				"modmenu.discord": "https://discord.gg/uQzTRx2V8Y",
+				"modmenu.modrinth": "https://fabricmc.net",
+				"modmenu.curseforge": "https://fabricmc.net"
+			}
+		}
+	},
+	"license": "MIT",
+	"icon": "assets/ultrasonic/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": ["mod.destructor_ben.ultrasonic.Ultrasonic"],
+		"modmenu": ["mod.destructor_ben.ultrasonic.UltrasonicModMenuIntegration"]
+	},
+	"mixins": [
+		"ultrasonic.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.5",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"cloth-config2": ">=5-"
+	}
+}

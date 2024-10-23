@@ -1,0 +1,16 @@
+{
+    "required": true,
+    "package": "mod.destructor_ben.ultrasonic.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "client": [
+        "GameOptionsScreenAccessor",
+        "MusicTrackerAccessor",
+        "MusicTrackerMixin",
+        "PositionedSoundInstanceMixin",
+        "SoundOptionsScreenMixin",
+        "WeightedSoundSetAccessor"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

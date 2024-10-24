@@ -94,8 +94,6 @@ public class MusicDatabase
     }
 
     // Note that not all songs in the actual albums are here, since not all are used
-    // TODO: add ender dragon music
-    // TODO: add the 3 C418 singles
     private void addInitialData()
     {
         // Minecraft - Volume Alpha
@@ -132,9 +130,19 @@ public class MusicDatabase
             .addTrack(Identifier.ofVanilla("game/creative/taswell"))
             .addTrack(Identifier.ofVanilla("menu/beginning_2"))
             .addTrack(Identifier.ofVanilla("game/creative/dreiton"))
-            .addTrack(Identifier.ofVanilla("game/end/the_end"));
+            .addTrack(Identifier.ofVanilla("game/end/the_end"))
+            // Technically, the boss music isn't meant to be here, but I'm not making an album dedicated to it
+            .addTrack(Identifier.ofVanilla("game/end/boss"));
 
         addAlbum(volumeBeta);
+
+        // Underwater singles (Technically 3rd volume)
+        var underwaterSingles = new Album(Identifier.ofVanilla("underwater_singles"))
+            .addTrack(Identifier.ofVanilla("game/water/axolotl"))
+            .addTrack(Identifier.ofVanilla("game/water/dragon_fish"))
+            .addTrack(Identifier.ofVanilla("game/water/shuniji"));
+
+        addAlbum(underwaterSingles);
 
         // Minecraft: Nether Update
         var netherUpdate = new Album(Identifier.ofVanilla("nether_update"))

@@ -27,10 +27,15 @@ public class TrackWidget extends AbstractConfigListEntry<Boolean>
     private final List<ClickableWidget> widgets;
     private final ButtonWidget toggleEnabledButton;
 
+    private boolean isVisible()
+    {
+        // TODO: if we are searching, also make visible
+        return !albumWidget.shouldTracksDraw();
+    }
+
     public TrackWidget(Track track, AlbumWidget albumWidget, boolean value, Consumer<Boolean> saveConsumer)
     {
-        // TODO: make the name also include the album
-        super(track.getName(), false);
+        super(Text.literal(track.getName().getString() + " - " + track.getArtistName().getString()), false);
         saveCallback = saveConsumer;
 
         this.track = track;
@@ -49,7 +54,7 @@ public class TrackWidget extends AbstractConfigListEntry<Boolean>
     public void render(DrawContext graphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isHovered, float delta)
     {
         // Only draw if the toggle has been enabled
-        if (!albumWidget.shouldTracksDraw())
+        if (!isVisible())
             return;
 
         super.render(graphics, index, y, x, entryWidth, entryHeight, mouseX, mouseY, isHovered, delta);
@@ -57,12 +62,11 @@ public class TrackWidget extends AbstractConfigListEntry<Boolean>
 
         // Toggle
         // Disable this when the parent is disabled
-        // TODO: fix lagging behind when scrolling
         toggleEnabledButton.active = isEditable() && albumWidget.isEditable() && albumWidget.getValue();
-        toggleEnabledButton.render(graphics, mouseX, mouseY, delta);
         toggleEnabledButton.setPosition(x, y);
         // TODO: tick and cross
-        toggleEnabledButton.setMessage(Text.of(isEnabled.get() ? "✓" : "N"));
+        toggleEnabledButton.setMessage(Text.of(isEnabled.get() ? "Y" : "N"));
+        toggleEnabledButton.render(graphics, mouseX, mouseY, delta);
 
         // Draw the track name and artist
         int nameX = x + BUTTON_WIDTH + AlbumWidget.PADDING;
@@ -77,7 +81,7 @@ public class TrackWidget extends AbstractConfigListEntry<Boolean>
     @Override
     public int getItemHeight()
     {
-        return albumWidget.shouldTracksDraw() ? super.getItemHeight() : 0;
+        return isVisible() ? super.getItemHeight() : 0;
     }
 
     @Override

@@ -31,6 +31,7 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
     private static final Text DISABLED_TEXT = Text.translatable("option.ultrasonic.disabled");
     private static final Text HIDE_TEXT = Text.translatable("option.ultrasonic.hide_tracks");
     private static final Text SHOW_TEXT = Text.translatable("option.ultrasonic.show_tracks");
+    private static final Text EMPTY_TEXT = Text.translatable("option.ultrasonic.empty");
 
     private final Album album;
     private final AtomicBoolean isEnabled;
@@ -39,7 +40,7 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
 
     private final List<ClickableWidget> widgets;
     private final ButtonWidget toggleEnabledButton;
-    private final ButtonWidget toggleTracksVisibleButton; // TODO: make thus button say empty and be disabled if there are no tracks
+    private final ButtonWidget toggleTracksVisibleButton;
 
     public boolean shouldTracksDraw()
     {
@@ -89,6 +90,7 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
         // Draw buttons
         int buttonX = textX;
         int buttonY = y + PADDING + ICON_SIZE - BUTTON_HEIGHT;
+        // TODO: make this button inactive too if the album is empty? reset the value too?
         toggleEnabledButton.active = this.isEditable();
         toggleEnabledButton.setPosition(buttonX, buttonY);
         toggleEnabledButton.setMessage(isEnabled.get() ? ENABLED_TEXT : DISABLED_TEXT);
@@ -97,7 +99,8 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
         buttonX += BUTTON_WIDTH + PADDING;
         toggleTracksVisibleButton.active = this.isEditable() && !album.tracks.isEmpty();
         toggleTracksVisibleButton.setPosition(buttonX, buttonY);
-        toggleTracksVisibleButton.setMessage(isTracksVisible.get() ? HIDE_TEXT : SHOW_TEXT);
+        // TODO: maybe make the text just say "Empty"?
+        toggleTracksVisibleButton.setMessage(album.tracks.isEmpty() ? EMPTY_TEXT : isTracksVisible.get() ? HIDE_TEXT : SHOW_TEXT);
         toggleTracksVisibleButton.render(graphics, mouseX, mouseY, delta);
     }
 

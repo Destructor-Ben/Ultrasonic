@@ -12,6 +12,7 @@
     "option.ultrasonic.disabled": "§cDisabled",
     "option.ultrasonic.hide_tracks": "Hide Tracks",
     "option.ultrasonic.show_tracks": "Show Tracks",
+    "option.ultrasonic.empty": "Show Tracks (Empty)",
 
     "category.ultrasonic.music": "Music (Ultrasonic)",
     "key.ultrasonic.stop": "Stop Current Song",

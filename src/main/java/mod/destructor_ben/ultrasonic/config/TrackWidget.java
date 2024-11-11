@@ -30,7 +30,7 @@ public class TrackWidget extends AbstractConfigListEntry<Boolean>
     private boolean isVisible()
     {
         // TODO: if we are searching, also make visible
-        return !albumWidget.shouldTracksDraw();
+        return albumWidget.shouldTracksDraw();
     }
 
     public TrackWidget(Track track, AlbumWidget albumWidget, boolean value, Consumer<Boolean> saveConsumer)

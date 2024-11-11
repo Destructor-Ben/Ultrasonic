@@ -81,6 +81,12 @@ public class UltrasonicConfig
 
         var entryBuilder = builder.entryBuilder();
 
+        builder.setSavingRunnable(() ->
+        {
+            save();
+            load();
+        });
+
         // Music options
         var music = builder.getOrCreateCategory(Text.translatable("option.ultrasonic.category.music"));
 
@@ -95,13 +101,6 @@ public class UltrasonicConfig
                                    .setTooltip(Text.translatable("option.ultrasonic.always_play_music.tooltip"))
                                    .setSaveConsumer(newValue -> alwaysPlayMusic = newValue)
                                    .build());
-
-        // Saving logic
-        builder.setSavingRunnable(() ->
-        {
-            save();
-            load();
-        });
 
         return builder.build();
     }

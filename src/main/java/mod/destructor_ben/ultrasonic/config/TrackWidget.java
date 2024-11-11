@@ -6,7 +6,9 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
+import net.minecraft.text.Text;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,12 +17,15 @@ import java.util.function.Consumer;
 
 public class TrackWidget extends AbstractConfigListEntry<Boolean>
 {
+    private static final int BUTTON_WIDTH = 20;
+
     private final Track track;
     private final AlbumWidget albumWidget;
     private final AtomicBoolean isEnabled;
     private final boolean originalValue;
 
     private final List<ClickableWidget> widgets;
+    private final ButtonWidget toggleEnabledButton;
 
     public TrackWidget(Track track, AlbumWidget albumWidget, boolean value, Consumer<Boolean> saveConsumer)
     {
@@ -33,9 +38,11 @@ public class TrackWidget extends AbstractConfigListEntry<Boolean>
         originalValue = value;
         isEnabled = new AtomicBoolean(value);
 
-        // TODO: add the toggle button - make it uneditable when the parent is disabled
+        toggleEnabledButton = ButtonWidget.builder(Text.empty(), widget -> this.isEnabled.set(!this.isEnabled.get()))
+                                          .width(BUTTON_WIDTH)
+                                          .build();
 
-        widgets = List.of();
+        widgets = List.of(toggleEnabledButton);
     }
 
     @Override
@@ -46,11 +53,25 @@ public class TrackWidget extends AbstractConfigListEntry<Boolean>
             return;
 
         super.render(graphics, index, y, x, entryWidth, entryHeight, mouseX, mouseY, isHovered, delta);
-
-        // TODO: rendering
         var textRenderer = MinecraftClient.getInstance().textRenderer;
 
-        graphics.drawText(textRenderer, track.getName(), x, y, 0xFFFFFF, true);
+        // Toggle
+        // Disable this when the parent is disabled
+        // TODO: fix lagging behind when scrolling
+        toggleEnabledButton.active = isEditable() && albumWidget.isEditable() && albumWidget.getValue();
+        toggleEnabledButton.render(graphics, mouseX, mouseY, delta);
+        toggleEnabledButton.setPosition(x, y);
+        // TODO: tick and cross
+        toggleEnabledButton.setMessage(Text.of(isEnabled.get() ? "✓" : "N"));
+
+        // Draw the track name and artist
+        int nameX = x + BUTTON_WIDTH + AlbumWidget.PADDING;
+        int nameY = y + 6;
+        var name = track.getName();
+        graphics.drawTextWithShadow(textRenderer, name, nameX, nameY, getPreferredTextColor());
+
+        nameX += textRenderer.getWidth(name);
+        graphics.drawTextWithShadow(textRenderer, " - " + track.getArtistName().getString(), nameX, nameY, AlbumWidget.GRAY);
     }
 
     @Override

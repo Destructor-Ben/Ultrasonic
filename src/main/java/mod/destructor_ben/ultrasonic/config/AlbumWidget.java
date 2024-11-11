@@ -18,21 +18,19 @@ import java.util.function.Consumer;
 
 public class AlbumWidget extends AbstractConfigListEntry<Boolean>
 {
+    @SuppressWarnings("DataFlowIssue")
+    public static final int GRAY = Formatting.GRAY.getColorValue();
+
+    public static final int PADDING = 4; // Padding below elements that cloth creates
     // Icons are actually 128, but that was too big and I can't be bothered resizing them
     private static final int ICON_SIZE = 64;
     private static final int BUTTON_WIDTH = 100;
     private static final int BUTTON_HEIGHT = 20;
-    private static final int PADDING = 4; // Padding below elements that cloth creates
 
     private static final Text ENABLED_TEXT = Text.translatable("option.ultrasonic.enabled");
     private static final Text DISABLED_TEXT = Text.translatable("option.ultrasonic.disabled");
     private static final Text HIDE_TEXT = Text.translatable("option.ultrasonic.hide_tracks");
     private static final Text SHOW_TEXT = Text.translatable("option.ultrasonic.show_tracks");
-
-    @SuppressWarnings("DataFlowIssue")
-    private static final int WHITE = Formatting.WHITE.getColorValue();
-    @SuppressWarnings("DataFlowIssue")
-    private static final int GRAY = Formatting.GRAY.getColorValue();
 
     private final Album album;
     private final AtomicBoolean isEnabled;
@@ -41,7 +39,7 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
 
     private final List<ClickableWidget> widgets;
     private final ButtonWidget toggleEnabledButton;
-    private final ButtonWidget toggleTracksVisibleButton;
+    private final ButtonWidget toggleTracksVisibleButton; // TODO: make thus button say empty and be disabled if there are no tracks
 
     public boolean shouldTracksDraw()
     {
@@ -75,7 +73,6 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
     public void render(DrawContext graphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean isHovered, float delta)
     {
         super.render(graphics, index, y, x, entryWidth, entryHeight, mouseX, mouseY, isHovered, delta);
-
         var textRenderer = MinecraftClient.getInstance().textRenderer;
 
         // Draw album icon
@@ -85,9 +82,9 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
         // Draw text info
         int textX = x + ICON_SIZE + PADDING;
         int textY = iconY;
-        graphics.drawText(textRenderer, album.getName(), textX, textY, WHITE, true);
+        graphics.drawTextWithShadow(textRenderer, album.getName(), textX, textY, this.getPreferredTextColor());
         textY += textRenderer.fontHeight + PADDING;
-        graphics.drawText(textRenderer, album.getArtists(), textX, textY, GRAY, true);
+        graphics.drawTextWithShadow(textRenderer, album.getArtists(), textX, textY, GRAY);
 
         // Draw buttons
         int buttonX = textX;
@@ -98,7 +95,7 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
         toggleEnabledButton.render(graphics, mouseX, mouseY, delta);
 
         buttonX += BUTTON_WIDTH + PADDING;
-        toggleTracksVisibleButton.active = this.isEditable();
+        toggleTracksVisibleButton.active = this.isEditable() && !album.tracks.isEmpty();
         toggleTracksVisibleButton.setPosition(buttonX, buttonY);
         toggleTracksVisibleButton.setMessage(isTracksVisible.get() ? HIDE_TEXT : SHOW_TEXT);
         toggleTracksVisibleButton.render(graphics, mouseX, mouseY, delta);

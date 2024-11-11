@@ -125,6 +125,7 @@ public class UltrasonicConfig
                 albums.addEntry(new TrackWidget(
                     track,
                     albumWidget,
+                    // TODO: make the values actually handled
                     true,
                     newValue ->
                     {

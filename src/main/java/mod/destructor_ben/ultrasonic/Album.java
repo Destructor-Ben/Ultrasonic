@@ -39,4 +39,9 @@ public class Album
     {
         return Text.translatable(Util.createTranslationKey("album", id.withSuffixedPath("/artists")));
     }
+
+    public Identifier getIconID()
+    {
+        return id.withPrefixedPath("textures/album/").withSuffixedPath(".png");
+    }
 }

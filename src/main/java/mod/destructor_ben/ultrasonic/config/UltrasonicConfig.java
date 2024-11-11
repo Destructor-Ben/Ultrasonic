@@ -3,6 +3,7 @@ package mod.destructor_ben.ultrasonic.config;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
+import mod.destructor_ben.ultrasonic.MusicDatabase;
 import mod.destructor_ben.ultrasonic.Ultrasonic;
 import mod.destructor_ben.ultrasonic.mixin.GameOptionsScreenAccessor;
 import net.fabricmc.loader.api.FabricLoader;
@@ -102,6 +103,21 @@ public class UltrasonicConfig
                                    .setTooltip(Text.translatable("option.ultrasonic.always_play_music.tooltip"))
                                    .setSaveConsumer(newValue -> alwaysPlayMusic = newValue)
                                    .build());
+
+        // Albums
+        var albums = builder.getOrCreateCategory(Text.translatable("option.ultrasonic.category.albums"));
+
+        for (var album : MusicDatabase.getInstance().albums)
+        {
+            albums.addEntry(new AlbumWidget(
+                album,
+                // TODO: make the values actually handled
+                true,
+                newValue ->
+                {
+                }
+            ));
+        }
 
         return builder.build();
     }

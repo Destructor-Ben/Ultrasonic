@@ -1,6 +1,7 @@
 {
     "option.ultrasonic.title": "Ultrasonic Config",
-    "option.ultrasonic.category.music": "Music",
+    "option.ultrasonic.category.music": "Music Options",
+    "option.ultrasonic.category.albums": "Albums & Tracks",
     "option.ultrasonic.display_music_message": "Display Current Music Message",
     "option.ultrasonic.display_music_message.tooltip": "Whether to display a 'Now Playing' message for background music",
     "option.ultrasonic.always_play_music": "Always Play Music",

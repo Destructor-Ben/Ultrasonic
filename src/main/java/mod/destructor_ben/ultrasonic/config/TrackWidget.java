@@ -70,7 +70,7 @@ public class TrackWidget extends AbstractConfigListEntry<Boolean>
 
         // Draw the track name and artist
         int nameX = x + BUTTON_WIDTH + AlbumWidget.PADDING;
-        int nameY = y + 6;
+        int nameY = y + 6; // 6 comes from what the boolean toggle uses to draw text
         var name = track.getName();
         graphics.drawTextWithShadow(textRenderer, name, nameX, nameY, getPreferredTextColor());
 

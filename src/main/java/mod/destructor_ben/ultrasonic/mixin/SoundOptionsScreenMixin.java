@@ -1,6 +1,6 @@
 package mod.destructor_ben.ultrasonic.mixin;
 
-import mod.destructor_ben.ultrasonic.UltrasonicConfig;
+import mod.destructor_ben.ultrasonic.config.UltrasonicConfig;
 import net.minecraft.client.gui.screen.option.SoundOptionsScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

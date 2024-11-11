@@ -1,4 +1,4 @@
-package mod.destructor_ben.ultrasonic;
+package mod.destructor_ben.ultrasonic.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;

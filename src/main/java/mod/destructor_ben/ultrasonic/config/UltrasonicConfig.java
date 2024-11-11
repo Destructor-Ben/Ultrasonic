@@ -1,8 +1,9 @@
-package mod.destructor_ben.ultrasonic;
+package mod.destructor_ben.ultrasonic.config;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
+import mod.destructor_ben.ultrasonic.Ultrasonic;
 import mod.destructor_ben.ultrasonic.mixin.GameOptionsScreenAccessor;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;

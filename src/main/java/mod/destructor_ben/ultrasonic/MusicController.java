@@ -1,5 +1,6 @@
 package mod.destructor_ben.ultrasonic;
 
+import mod.destructor_ben.ultrasonic.config.UltrasonicConfig;
 import mod.destructor_ben.ultrasonic.mixin.MusicTrackerAccessor;
 import mod.destructor_ben.ultrasonic.mixin.WeightedSoundSetAccessor;
 import net.minecraft.client.MinecraftClient;

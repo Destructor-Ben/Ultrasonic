@@ -2,10 +2,16 @@
     "option.ultrasonic.title": "Ultrasonic Config",
     "option.ultrasonic.category.music": "Music Options",
     "option.ultrasonic.category.albums": "Albums & Tracks",
+
     "option.ultrasonic.display_music_message": "Display Current Music Message",
     "option.ultrasonic.display_music_message.tooltip": "Whether to display a 'Now Playing' message for background music",
     "option.ultrasonic.always_play_music": "Always Play Music",
     "option.ultrasonic.always_play_music.tooltip": "Whether to remove the delay between music in the background",
+
+    "option.ultrasonic.enabled": "§aEnabled",
+    "option.ultrasonic.disabled": "§cDisabled",
+    "option.ultrasonic.hide_tracks": "Hide Tracks",
+    "option.ultrasonic.show_tracks": "Show Tracks",
 
     "category.ultrasonic.music": "Music (Ultrasonic)",
     "key.ultrasonic.stop": "Stop Current Song",

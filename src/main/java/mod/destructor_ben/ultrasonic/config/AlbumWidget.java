@@ -9,6 +9,7 @@ import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,19 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
 {
     // Icons are actually 128, but that was too big and I can't be bothered resizing them
     private static final int ICON_SIZE = 64;
+    private static final int BUTTON_WIDTH = 100;
+    private static final int BUTTON_HEIGHT = 20;
     private static final int PADDING = 4; // Padding below elements that cloth creates
+
+    private static final Text ENABLED_TEXT = Text.translatable("option.ultrasonic.enabled");
+    private static final Text DISABLED_TEXT = Text.translatable("option.ultrasonic.disabled");
+    private static final Text HIDE_TEXT = Text.translatable("option.ultrasonic.hide_tracks");
+    private static final Text SHOW_TEXT = Text.translatable("option.ultrasonic.show_tracks");
+
+    @SuppressWarnings("DataFlowIssue")
+    private static final int WHITE = Formatting.WHITE.getColorValue();
+    @SuppressWarnings("DataFlowIssue")
+    private static final int GRAY = Formatting.GRAY.getColorValue();
 
     private final Album album;
     private final AtomicBoolean isEnabled;
@@ -29,6 +42,11 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
     private final List<ClickableWidget> widgets;
     private final ButtonWidget toggleEnabledButton;
     private final ButtonWidget toggleTracksVisibleButton;
+
+    public boolean shouldTracksDraw()
+    {
+        return isTracksVisible.get();
+    }
 
     public AlbumWidget(Album album, boolean value, Consumer<Boolean> saveConsumer)
     {
@@ -40,14 +58,16 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
         isEnabled = new AtomicBoolean(value);
         isTracksVisible = new AtomicBoolean(false);
 
+        // Create buttons UI
         toggleEnabledButton = ButtonWidget.builder(Text.empty(), widget -> this.isEnabled.set(!this.isEnabled.get()))
-                                          .dimensions(0, 0, 50, 20)
+                                          .width(BUTTON_WIDTH)
                                           .build();
 
         toggleTracksVisibleButton = ButtonWidget.builder(Text.empty(), widget -> this.isTracksVisible.set(!this.isTracksVisible.get()))
-                                                .dimensions(0, 0, 50, 20)
+                                                .width(BUTTON_WIDTH)
                                                 .build();
 
+        // Create widgets list
         widgets = List.of(toggleEnabledButton, toggleTracksVisibleButton);
     }
 
@@ -58,25 +78,36 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
 
         var textRenderer = MinecraftClient.getInstance().textRenderer;
 
-        graphics.drawTexture(album.getIconID(), x, y, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
-        graphics.drawText(textRenderer, album.getName(), x + ICON_SIZE + PADDING, y, 0xFFFFFFFF, true);
-        graphics.drawText(textRenderer, album.getArtists(), x + ICON_SIZE + PADDING, y + 16, 0xFFAAAAAA, true);
+        // Draw album icon
+        int iconY = y + PADDING;
+        graphics.drawTexture(album.getIconID(), x, iconY, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
 
+        // Draw text info
+        int textX = x + ICON_SIZE + PADDING;
+        int textY = iconY;
+        graphics.drawText(textRenderer, album.getName(), textX, textY, WHITE, true);
+        textY += textRenderer.fontHeight + PADDING;
+        graphics.drawText(textRenderer, album.getArtists(), textX, textY, GRAY, true);
+
+        // Draw buttons
+        int buttonX = textX;
+        int buttonY = y + PADDING + ICON_SIZE - BUTTON_HEIGHT;
         toggleEnabledButton.active = this.isEditable();
-        toggleEnabledButton.setPosition(x + ICON_SIZE + PADDING, y + 16 + 16);
-        toggleEnabledButton.setMessage(Text.translatable(isEnabled.get() ? "§aEnabled" : "§cDisabled"));
+        toggleEnabledButton.setPosition(buttonX, buttonY);
+        toggleEnabledButton.setMessage(isEnabled.get() ? ENABLED_TEXT : DISABLED_TEXT);
         toggleEnabledButton.render(graphics, mouseX, mouseY, delta);
 
+        buttonX += BUTTON_WIDTH + PADDING;
         toggleTracksVisibleButton.active = this.isEditable();
-        toggleTracksVisibleButton.setPosition(x + ICON_SIZE + PADDING + 50, y + 16 + 16);
-        toggleEnabledButton.setMessage(Text.translatable(isTracksVisible.get() ? "Hide" : "Show"));
+        toggleTracksVisibleButton.setPosition(buttonX, buttonY);
+        toggleTracksVisibleButton.setMessage(isTracksVisible.get() ? HIDE_TEXT : SHOW_TEXT);
         toggleTracksVisibleButton.render(graphics, mouseX, mouseY, delta);
     }
 
     @Override
     public int getItemHeight()
     {
-        return ICON_SIZE + PADDING;
+        return ICON_SIZE + PADDING * 3;
     }
 
     @Override

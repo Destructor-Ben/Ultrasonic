@@ -109,14 +109,29 @@ public class UltrasonicConfig
 
         for (var album : MusicDatabase.getInstance().albums)
         {
-            albums.addEntry(new AlbumWidget(
+            var albumWidget = new AlbumWidget(
                 album,
                 // TODO: make the values actually handled
                 true,
                 newValue ->
                 {
                 }
-            ));
+            );
+
+            albums.addEntry(albumWidget);
+
+            for (var track : album.tracks)
+            {
+                albums.addEntry(new TrackWidget(
+                    track,
+                    albumWidget,
+                    true,
+                    newValue ->
+                    {
+
+                    }
+                ));
+            }
         }
 
         return builder.build();

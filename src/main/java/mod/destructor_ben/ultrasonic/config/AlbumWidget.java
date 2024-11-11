@@ -2,6 +2,7 @@ package mod.destructor_ben.ultrasonic.config;
 
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import mod.destructor_ben.ultrasonic.Album;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
@@ -17,6 +18,7 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
 {
     // Icons are actually 128, but that was too big and I can't be bothered resizing them
     private static final int ICON_SIZE = 64;
+    private static final int PADDING = 4; // Padding below elements that cloth creates
 
     private final Album album;
     private final AtomicBoolean isEnabled;
@@ -46,13 +48,17 @@ public class AlbumWidget extends AbstractConfigListEntry<Boolean>
     {
         super.render(graphics, index, y, x, entryWidth, entryHeight, mouseX, mouseY, isHovered, delta);
 
+        var textRenderer = MinecraftClient.getInstance().textRenderer;
+
         graphics.drawTexture(album.getIconID(), x, y, 0, 0, ICON_SIZE, ICON_SIZE, ICON_SIZE, ICON_SIZE);
+        graphics.drawText(textRenderer, album.getName(), x + ICON_SIZE + PADDING, y, 0xFFFFFFFF, true);
+        graphics.drawText(textRenderer, album.getArtists(), x + ICON_SIZE + PADDING, y + 20, 0xFFAAAAAA, true);
     }
 
     @Override
     public int getItemHeight()
     {
-        return ICON_SIZE;
+        return ICON_SIZE + PADDING;
     }
 
     @Override

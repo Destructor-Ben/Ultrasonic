@@ -64,7 +64,7 @@ public class MusicDatabase
 
     public void addAlbum(Album album)
     {
-        Ultrasonic.LOGGER.info("Adding album: {}", album.getName().getString());
+        Ultrasonic.LOGGER.debug("Adding album: {}", album.getName().getString());
         albums.add(album);
     }
 

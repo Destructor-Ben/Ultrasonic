@@ -33,7 +33,7 @@ public class TrackWidget extends AbstractConfigListEntry<Boolean>
         originalValue = value;
         isEnabled = new AtomicBoolean(value);
 
-        // TODO: add the toggle button
+        // TODO: add the toggle button - make it uneditable when the parent is disabled
 
         widgets = List.of();
     }

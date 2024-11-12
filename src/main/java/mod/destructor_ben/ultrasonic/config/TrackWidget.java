@@ -2,6 +2,7 @@ package mod.destructor_ben.ultrasonic.config;
 
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
 import mod.destructor_ben.ultrasonic.Track;
+import mod.destructor_ben.ultrasonic.Ultrasonic;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
@@ -18,9 +19,9 @@ import java.util.function.Consumer;
 
 public class TrackWidget extends AbstractConfigListEntry<Boolean>
 {
-    private static final int BUTTON_WIDTH = 20;
-    private static final Identifier TICK_TEXTURE = Identifier.ofVanilla("container/beacon/confirm");
-    private static final Identifier CROSS_TEXTURE = Identifier.ofVanilla("container/beacon/cancel");
+    private static final int BUTTON_SIZE = 20;
+    private static final Identifier TICK_TEXTURE = Identifier.of(Ultrasonic.MOD_ID, "config/tick");
+    private static final Identifier CROSS_TEXTURE = Identifier.of(Ultrasonic.MOD_ID, "config/cross");
 
     private final Track track;
     private final AlbumWidget albumWidget;
@@ -47,7 +48,7 @@ public class TrackWidget extends AbstractConfigListEntry<Boolean>
         isEnabled = new AtomicBoolean(value);
 
         toggleEnabledButton = ButtonWidget.builder(Text.empty(), widget -> this.isEnabled.set(!this.isEnabled.get()))
-                                          .width(BUTTON_WIDTH)
+                                          .width(BUTTON_SIZE)
                                           .build();
 
         widgets = List.of(toggleEnabledButton);
@@ -72,10 +73,10 @@ public class TrackWidget extends AbstractConfigListEntry<Boolean>
         // Draw tick and cross
         var iconTexture = isEnabled.get() ? TICK_TEXTURE : CROSS_TEXTURE;
         // TODO: clean up
-        graphics.drawGuiTexture(iconTexture, x + 1, y, BUTTON_WIDTH, BUTTON_WIDTH);
+        graphics.drawGuiTexture(iconTexture, x, y, BUTTON_SIZE, BUTTON_SIZE);
 
         // Draw the track name and artist
-        int nameX = x + BUTTON_WIDTH + AlbumWidget.PADDING;
+        int nameX = x + BUTTON_SIZE + AlbumWidget.PADDING;
         int nameY = y + 6; // 6 comes from what the boolean toggle uses to draw text
         var name = track.getName();
         graphics.drawTextWithShadow(textRenderer, name, nameX, nameY, getPreferredTextColor());

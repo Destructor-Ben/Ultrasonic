@@ -7,6 +7,7 @@ import net.minecraft.util.Util;
 public class Track
 {
     public Identifier id;
+    public Album album;
     public boolean isUnknown = false;
 
     public Track(Identifier id)

@@ -10,6 +10,7 @@ import java.util.List;
 public class Album
 {
     public Identifier id;
+    // Do not add tracks directly, they won't have their album set
     public List<Track> tracks;
 
     public Album(Identifier id)
@@ -20,6 +21,7 @@ public class Album
 
     public Album addTrack(Track track)
     {
+        track.album = this;
         tracks.add(track);
         return this;
     }

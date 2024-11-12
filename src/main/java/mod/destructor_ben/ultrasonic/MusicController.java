@@ -13,8 +13,8 @@ import net.minecraft.util.math.random.Random;
 
 // Manages in game music
 // TODO: make stopping music fade it out
-// TODO: allow certain albums and tracks to be disabled - probably do this by making a MusicSoundInstance (based on positioned sound instance) that is fancy, or modify WeightedSoundSet
 // TODO: stop music when records are playing
+// TODO: stop the same song playing in a row
 // TODO: maybe allow playing a song whenever the user wants + queuing songs
 public class MusicController
 {
@@ -39,6 +39,8 @@ public class MusicController
 
         // Get the track
         var track = MusicDatabase.getInstance().getTrack(id);
+        if (track == null)
+            return;
 
         // Display the message with the same notification system as the Jukebox
         var message = Text.literal(track.getArtistName().getString() + " - " + track.getName().getString());
@@ -55,18 +57,11 @@ public class MusicController
             accessor.setTimeUntilNextSong(0);
     }
 
-    // TODO: test
     public static boolean shouldPlaySound(Identifier id)
     {
         id = MusicDatabase.soundIDtoID(id);
-
-        // TODO: temporary
-        var player = MinecraftClient.getInstance().player;
-        if (player != null)
-            player.sendMessage(Text.literal(id.toString()));
-
-        // TODO: handle albums too
-        return !UltrasonicConfig.ignoredTracks.contains(id);
+        var track = MusicDatabase.getInstance().getTrack(id);
+        return !UltrasonicConfig.ignoredTracks.contains(track.id) && !UltrasonicConfig.ignoredAlbums.contains(track.album.id);
     }
 
     // TODO: test
@@ -108,13 +103,13 @@ public class MusicController
         return SoundManager.INTENTIONALLY_EMPTY_SOUND;
     }
 
+    // TODO: spamming stop and skip can leave multiple songs playing, also theoretically it will make the time until next song massively increase
     // Stop current song and leave the delay the same
     public static void stop()
     {
         MinecraftClient.getInstance().getMusicTracker().stop();
     }
 
-    // TODO: spamming this can leave multiple songs playing
     // Stop the current song and set the delay to 0
     public static void skip()
     {

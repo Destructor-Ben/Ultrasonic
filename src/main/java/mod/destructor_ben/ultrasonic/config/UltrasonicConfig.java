@@ -55,11 +55,6 @@ public class UltrasonicConfig
         file = FabricLoader.getInstance().getConfigDir().resolve(Ultrasonic.MOD_ID + ".json").toFile();
         load();
         save();
-
-        // TODO: temporary, just for testing
-        ignoredTracks.add(Identifier.ofVanilla("menu/beginning_2"));
-        ignoredTracks.add(Identifier.ofVanilla("game/creative/aria_math"));
-        ignoredTracks.add(Identifier.ofVanilla("game/creative/dreiton"));
     }
 
     public static void modifyMusicScreen()

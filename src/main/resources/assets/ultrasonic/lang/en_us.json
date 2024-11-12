@@ -8,6 +8,8 @@
     "option.ultrasonic.always_play_music": "Always Play Music",
     "option.ultrasonic.always_play_music.tooltip": "Whether to remove the delay between music in the background",
 
+    "option.ultrasonic.modify_available_music": "Modify Available Music",
+    "option.ultrasonic.modify_available_music.tooltip": "Whether to modify what music can play in game",
     "option.ultrasonic.enabled": "§aEnabled",
     "option.ultrasonic.disabled": "§cDisabled",
     "option.ultrasonic.hide_tracks": "Hide Tracks",

@@ -9,6 +9,7 @@ import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,8 @@ import java.util.function.Consumer;
 public class TrackWidget extends AbstractConfigListEntry<Boolean>
 {
     private static final int BUTTON_WIDTH = 20;
+    private static final Identifier TICK_TEXTURE = Identifier.ofVanilla("container/beacon/confirm");
+    private static final Identifier CROSS_TEXTURE = Identifier.ofVanilla("container/beacon/cancel");
 
     private final Track track;
     private final AlbumWidget albumWidget;
@@ -64,9 +67,12 @@ public class TrackWidget extends AbstractConfigListEntry<Boolean>
         // Disable this when the parent is disabled
         toggleEnabledButton.active = isEditable() && albumWidget.isEditable() && albumWidget.getValue();
         toggleEnabledButton.setPosition(x, y);
-        // TODO: tick and cross
-        toggleEnabledButton.setMessage(Text.of(isEnabled.get() ? "Y" : "N"));
         toggleEnabledButton.render(graphics, mouseX, mouseY, delta);
+
+        // Draw tick and cross
+        var iconTexture = isEnabled.get() ? TICK_TEXTURE : CROSS_TEXTURE;
+        // TODO: clean up
+        graphics.drawGuiTexture(iconTexture, x + 1, y, BUTTON_WIDTH, BUTTON_WIDTH);
 
         // Draw the track name and artist
         int nameX = x + BUTTON_WIDTH + AlbumWidget.PADDING;

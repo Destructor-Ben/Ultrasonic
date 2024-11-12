@@ -1,5 +1,6 @@
 package mod.destructor_ben.ultrasonic.config;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
@@ -18,8 +19,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 // TODO: finish populating the config screen, the default values, the fields, and the saving and loading logic
 // TODO: maybe abstract this a little bit
@@ -32,18 +33,22 @@ public class UltrasonicConfig
     // Defaults
     private static final boolean DEFAULT_DISPLAY_MUSIC_MESSAGE = true;
     private static final boolean DEFAULT_ALWAYS_PLAY_MUSIC = true;
+    private static final boolean DEFAULT_MODIFY_AVAILABLE_MUSIC = true;
 
     // Json ids
     private static final String JSON_DISPLAY_MUSIC_MESSAGE = "displayMusicMessage";
     private static final String JSON_ALWAYS_PLAY_MUSIC = "alwaysPlayMusic";
+    private static final String JSON_MODIFY_AVAILABLE_MUSIC = "modifyAvailableMusic";
 
-    // Values
+    // Music options
     public static boolean displayMusicMessage = DEFAULT_DISPLAY_MUSIC_MESSAGE;
     public static boolean alwaysPlayMusic = DEFAULT_ALWAYS_PLAY_MUSIC;
 
+    // Albums and tracks
+    public static boolean modifyAvailableMusic = DEFAULT_MODIFY_AVAILABLE_MUSIC;
     // TODO: integrate these properly
-    public static boolean modifyAvailableMusic = true;
-    public static List<Identifier> ignoredTracks = new ArrayList<>();
+    public static Set<Identifier> ignoredAlbums = new HashSet<>();
+    public static Set<Identifier> ignoredTracks = new HashSet<>();
 
     public static void initialize()
     {
@@ -107,14 +112,23 @@ public class UltrasonicConfig
         // Albums
         var albums = builder.getOrCreateCategory(Text.translatable("option.ultrasonic.category.albums"));
 
+        albums.addEntry(entryBuilder.startBooleanToggle(Text.translatable("option.ultrasonic.modify_available_music"), modifyAvailableMusic)
+                                    .setDefaultValue(DEFAULT_MODIFY_AVAILABLE_MUSIC)
+                                    .setTooltip(Text.translatable("option.ultrasonic.modify_available_music.tooltip"))
+                                    .setSaveConsumer(newValue -> modifyAvailableMusic = newValue)
+                                    .build());
+
         for (var album : MusicDatabase.getInstance().albums)
         {
             var albumWidget = new AlbumWidget(
                 album,
-                // TODO: make the values actually handled
-                true,
-                newValue ->
+                !ignoredAlbums.contains(album.id),
+                isEnabled ->
                 {
+                    if (!isEnabled)
+                        ignoredAlbums.add(album.id);
+                    else
+                        ignoredAlbums.remove(album.id);
                 }
             );
 
@@ -125,11 +139,13 @@ public class UltrasonicConfig
                 albums.addEntry(new TrackWidget(
                     track,
                     albumWidget,
-                    // TODO: make the values actually handled
-                    true,
-                    newValue ->
+                    !ignoredTracks.contains(track.id),
+                    isEnabled ->
                     {
-
+                        if (!isEnabled)
+                            ignoredTracks.add(track.id);
+                        else
+                            ignoredTracks.remove(track.id);
                     }
                 ));
             }
@@ -186,6 +202,7 @@ public class UltrasonicConfig
         // Read the config
         displayMusicMessage = json.get(JSON_DISPLAY_MUSIC_MESSAGE).getAsBoolean();
         alwaysPlayMusic = json.get(JSON_ALWAYS_PLAY_MUSIC).getAsBoolean();
+        modifyAvailableMusic = json.get(JSON_MODIFY_AVAILABLE_MUSIC).getAsBoolean();
 
         Ultrasonic.LOGGER.info("Loaded config file");
     }
@@ -199,6 +216,24 @@ public class UltrasonicConfig
         // Convert the config into json
         json.addProperty(JSON_DISPLAY_MUSIC_MESSAGE, displayMusicMessage);
         json.addProperty(JSON_ALWAYS_PLAY_MUSIC, alwaysPlayMusic);
+        json.addProperty(JSON_MODIFY_AVAILABLE_MUSIC, modifyAvailableMusic);
+
+        // TODO: read info from the json
+        var jsonAlbums = new JsonArray();
+        for (var album : ignoredAlbums)
+        {
+            jsonAlbums.add(album.toString());
+        }
+
+        json.add("ignoredAlbums", jsonAlbums);
+
+        var jsonTracks = new JsonArray();
+        for (var track : ignoredTracks)
+        {
+            jsonTracks.add(track.toString());
+        }
+
+        json.add("ignoredTracks", jsonTracks);
 
         // Write to the file
         var stream = new FileOutputStream(file, false);

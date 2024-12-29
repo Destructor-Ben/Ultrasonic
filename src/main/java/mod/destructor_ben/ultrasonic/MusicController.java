@@ -16,6 +16,7 @@ import net.minecraft.util.math.random.Random;
 // TODO: stop music when records are playing
 // TODO: stop the same song playing in a row
 // TODO: maybe allow playing a song whenever the user wants + queuing songs
+// TODO: possibly add a small delay when always playing music/skipping to make it sound nicer
 public class MusicController
 {
     public static void displayCurrentMusicMessage()
